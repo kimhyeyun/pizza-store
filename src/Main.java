@@ -23,24 +23,35 @@ public class Main {
             }
 
             if (1 <= category && category <= CATEGORY_SIZE) {
-                int menu = printMenu(category);
-                if (menu < 1 || menus[category].size() < menu) {
+                int menuIndex = printMenu(category);
+                if (menuIndex < 1 || menus[category].size() < menuIndex) {
                     System.out.println("잘못된 입력입니다.");
                     return;
                 }
 
-                int choice = printToCart(menus[category].get(menu - 1));
+                Menu menu = menus[category].get(menuIndex - 1);
+                if (!menu.options.isEmpty()) {
+                    menu.printToCart();
+                    System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?");
+                    menu.printOption();
+
+                    int option = sc.nextInt();
+                    menu = new Menu(0, menu.name + "(" + menu.options.get(option).name + ")", menu.description, menu.options.get(option).price);
+                }
+
+                int choice = printToCart(menu);
 
                 if (choice == 1) {
-                    cart.addMenu(menus[category].get(menu - 1));
-                    System.out.println(menus[category].get(menu - 1).name + " 가 장바구니에 추가되었습니다.\n");
+                    cart.addMenu(menu);
+                    System.out.println(menu.name + " 가 장바구니에 추가되었습니다.\n");
                 } else if (choice == 2) {
                     System.out.println("취소되었습니다.\n");
                 } else {
                     System.out.println("잘못된 입력입니다.");
                     return;
                 }
-            } else if (category == 5) {
+
+            }else if (category == 5) {
                 int choice = printOrder();
 
                 if (choice == 1) {
@@ -153,6 +164,15 @@ public class Main {
                 new Menu(6, "Hamburger", "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거", 5400)
         );
 
+        menus[1].get(0).addOption(1, "Single", 6900);
+        menus[1].get(0).addOption(2, "Double", 10900);
+        menus[1].get(1).addOption(1, "Single", 8900);
+        menus[1].get(1).addOption(2, "Double", 12900);
+        menus[1].get(4).addOption(1, "Single", 6900);
+        menus[1].get(4).addOption(2, "Double", 10900);
+        menus[1].get(5).addOption(1, "Single", 5400);
+        menus[1].get(5).addOption(2, "Double", 9000);
+
         menus[2] = Arrays.asList(
                 new Menu(1, "Shaker", "바닐라, 초콜렛, 솔티드 카라멜, 블랙&화이트, 스트로베리, 피넛버터, 커피", 5900),
                 new Menu(2, "Shake of the Week", "특별한 커스터드 플레이버", 6500),
@@ -160,6 +180,9 @@ public class Main {
                 new Menu(4, "Floats", "루트 비어, 퍼플 카우, 크림시클", 5900),
                 new Menu(5, "Cup&Cone", "바닐라, 초콜릿, Flavor of the Week", 4900)
         );
+
+        menus[2].get(4).addOption(1, "Single", 4900);
+        menus[1].get(4).addOption(2, "Double", 5900);
 
         menus[3] = Arrays.asList(
                 new Menu(1, "Shack-made Lemonade", "매장에서 직접 만드는 상큼한 레몬에이드", 3900),
@@ -170,10 +193,25 @@ public class Main {
                 new Menu(6, "Bottled Water", "지리산 암반대수층으로 만든 프리미엄 생수", 1000)
         );
 
+        menus[3].get(0).addOption(1, "Regular", 3000);
+        menus[3].get(0).addOption(2, "Large", 4500);
+        menus[3].get(1).addOption(1, "Regular", 3400);
+        menus[3].get(1).addOption(2, "Large", 3900);
+        menus[3].get(2).addOption(1, "Regular", 3500);
+        menus[3].get(2).addOption(2, "Large", 4400);
+        menus[3].get(3).addOption(1, "Regular", 2700);
+        menus[3].get(3).addOption(2, "Large", 3300);
+
         menus[4] = Arrays.asList(
                 new Menu(1, "ShackMeister Ale", "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", 9800),
                 new Menu(2, "Magpie Brewing Co.", "", 6800),
                 new Menu(3, "The Hand and Malt", "", 6800)
         );
+
+        menus[4].get(1).addOption(1, "Pale Ale, Draft", 6800);
+        menus[4].get(1).addOption(2, "Porter, Draft", 6800);
+        menus[4].get(1).addOption(3, "Wheat, Draft", 6800);
+        menus[4].get(2).addOption(1, "IPA, Can", 6800);
+        menus[4].get(2).addOption(2, "Mocha Stout, Can", 6800);
     }
 }
