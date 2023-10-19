@@ -1,22 +1,24 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cart {
-    public List<Menu> menus;
+    public Map<Menu, Integer> menus;
 
     public Cart() {
-        this.menus = new ArrayList<>();
+        this.menus = new HashMap<>();
     }
 
     public void addMenu(Menu menu) {
-        this.menus.add(menu);
+        menus.put(menu, menus.getOrDefault(menu, 0) + 1);
     }
 
     public void getTotalPrice() {
         double price = 0;
 
-        for (Menu menu : menus) {
-            price += menu.price;
+        for (Menu menu : menus.keySet()) {
+            price += menu.price * menus.get(menu);
         }
 
         price /= 1000;
@@ -24,12 +26,12 @@ public class Cart {
     }
 
     public void printMenus() {
-        for (Menu menu : this.menus) {
-            menu.printToCart();
+        for (Menu menu : this.menus.keySet()) {
+            menu.printToCartWithCount(menus.get(menu));
         }
     }
 
     public void clear() {
-        this.menus = new ArrayList<>();
+        this.menus = new HashMap<>();
     }
 }

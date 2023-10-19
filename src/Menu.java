@@ -7,12 +7,14 @@ public class Menu extends Category{
     }
 
     public void print() {
-        System.out.printf("%d. %-20s |  ₩ %-4.1f | %s", this.index, this.name, (double) this.price/1000, this.description);
-        System.out.println();
+        System.out.printf("%d. %-20s |  ₩ %-4.1f | %s\n", this.index, this.name, (double) this.price/1000, this.description);
     }
 
     public void printToCart() {
-        System.out.printf("%-25s |  ₩ %-4.1f | %s", this.name, (double) this.price/1000, this.description);
-        System.out.println();
+        System.out.printf("%-25s |  ₩ %-4.1f | %s\n", this.name, (double) this.price/1000, this.description);
+    }
+
+    public void printToCartWithCount(int count) {
+        System.out.printf("%-25s |  ₩ %-4.1f | %d개 | %s\n", this.name, (double) this.price / 1000, count, this.description);
     }
 }
