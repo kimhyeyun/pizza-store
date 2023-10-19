@@ -16,15 +16,15 @@ public class Menu extends Category{
     }
 
     public void print() {
-        System.out.printf("%d. %-20s |  ₩ %-4.1f | %s\n", this.index, this.name, this.price/1000, this.description);
+        System.out.printf("%d. %-30s |  ₩ %-4.1f | %s\n", this.index, this.name, this.price/1000, this.description);
     }
 
     public void printToCart() {
-        System.out.printf("%-25s |  ₩ %-4.1f | %s\n", this.name, this.price/1000, this.description);
+        System.out.printf("%-30s |  ₩ %-4.1f | %s\n", this.name, this.price/1000, this.description);
     }
 
     public void printToCartWithCount(int count) {
-        System.out.printf("%-25s |  ₩ %-4.1f | %d개 | %s\n", this.name, this.price / 1000, count, this.description);
+        System.out.printf("%-30s |  ₩ %-4.1f | %d개 | %s\n", this.name, this.price / 1000, count, this.description);
     }
 
     public void printOption() {

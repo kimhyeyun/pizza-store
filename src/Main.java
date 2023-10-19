@@ -8,7 +8,7 @@ public class Main {
     private static List<Category> categories;
     private static List<Menu>[] menus;
     private static Cart cart;
-    private static int index;
+    private static Order order;
     private static final int CATEGORY_SIZE = 4;
     private static final String MAIN_COMMENT = "SHAKESHAKE BURGER 에 오신걸 환영합니다.";
     private static Scanner sc;
@@ -17,12 +17,12 @@ public class Main {
 
         while (true) {
             int category = printCategory();
-            if (category < 1 || 6 < category) {
+            if (6 < category) {
                 System.out.println("잘못된 입력입니다.\n");
                 continue;
             }
-
-            if (1 <= category && category <= CATEGORY_SIZE) {
+            if (category == 0) printTotalSale();
+            else if (1 <= category && category <= CATEGORY_SIZE) {
                 int menuIndex = printMenu(category);
                 if (menuIndex < 1 || menus[category].size() < menuIndex) {
                     System.out.println("잘못된 입력입니다.");
@@ -36,6 +36,10 @@ public class Main {
                     menu.printOption();
 
                     int option = sc.nextInt();
+                    if (option >= menu.options.size()) {
+                        System.out.println("잘못된 입력입니다.");
+                        continue;
+                    }
                     menu = new Menu(0, menu.name + "(" + menu.options.get(option).name + ")", menu.description, menu.options.get(option).price);
                 }
 
@@ -56,8 +60,9 @@ public class Main {
 
                 if (choice == 1) {
                     System.out.println("주문이 완료되었습니다!\n");
-                    System.out.println("대기 번호는 [ " + index++ + " ] 번 입니다.");
+                    System.out.println("대기 번호는 [ 1 ] 번 입니다.");
                     System.out.println("(3초 후 메뉴판으로 이동합니다.)\n");
+                    order.addMenu(cart.menus);
                     cart.clear();
                     try {
                         Thread.sleep(3000);
@@ -73,6 +78,17 @@ public class Main {
         }
     }
 
+    private static void printTotalSale() {
+        System.out.println("[ 총 판매금액 현황 ]");
+        System.out.printf("현재까지 총 판매된 금액은 [ ₩ %.1f ] 입니다.\n\n", order.totalPrice / 1000);
+
+        System.out.println("[ 총 판매상품 목록 현황 ]");
+        System.out.println("현재까지 총 판매된 상품 목록은 아래와 같습니다.");
+        order.printMenu();
+
+        System.out.println("\n1. 돌아가기");
+    }
+
     private static void cancelOrder() {
         System.out.println("진행하던 주문을 취소하시겠습니까?");
         System.out.println("1. 확인\t\t\t2. 취소");
@@ -80,7 +96,6 @@ public class Main {
         int choice = sc.nextInt();
         if (choice == 1) {
             System.out.println("진행하던 주문이 취소되었습니다.\n");
-            index -= 1;
             cart.clear();
         } else if (choice == 2) {
             System.out.println("주문을 취소하지 않습니다.\n");
@@ -145,6 +160,7 @@ public class Main {
         categories = new ArrayList<>();
         menus = new List[CATEGORY_SIZE + 1];
         cart = new Cart();
+        order = new Order();
 
         for (int i = 1; i <= CATEGORY_SIZE; i++) {
             menus[i] = new ArrayList<>();

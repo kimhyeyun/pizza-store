@@ -12,7 +12,7 @@ public class Cart {
         menus.put(menu, menus.getOrDefault(menu, 0) + 1);
     }
 
-    public void getTotalPrice() {
+    public double getTotalPrice() {
         double price = 0;
 
         for (Menu menu : menus.keySet()) {
@@ -21,6 +21,8 @@ public class Cart {
 
         price /= 1000;
         System.out.printf("₩ %.1f\n\n", price);
+
+        return price;
     }
 
     public void printMenus() {
