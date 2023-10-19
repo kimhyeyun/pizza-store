@@ -1,16 +1,43 @@
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     private static List<Category> categories;
     private static List<Menu>[] menus;
     private static final int CATEGORY_SIZE = 4;
+    private static final String MAIN_COMMENT = "SHAKESHAKE BURGER 에 오신걸 환영합니다.";
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
         initCategories();
         initMenus();
+
+        printCategory();
+        int category = sc.nextInt();
+
+        printMenu(category);
+    }
+
+    private static void printMenu(int category) {
+        System.out.println(MAIN_COMMENT);
+        System.out.println("아래 상품 메뉴판을 보시고 메뉴를 골라 입력해주세요.");
+        System.out.println();
+    }
+
+    private static void printCategory() {
+        System.out.println(MAIN_COMMENT);
+        System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.");
+        System.out.println();
+
+        System.out.println("[ SHAKESHAKE MENU ]");
+        for (Category category : categories) {
+            category.print();
+        }
     }
 
     private static void initMenus() {

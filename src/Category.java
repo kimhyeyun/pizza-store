@@ -9,4 +9,9 @@ public class Category {
         this.name = name;
         this.description = description;
     }
+
+    public void print() {
+        System.out.printf("%d. %-15s | %s", this.index, this.name, this.description);
+        System.out.println();
+    }
 }
